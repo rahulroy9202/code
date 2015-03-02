@@ -1,5 +1,3 @@
-Here's the coding problem. you can do it in any language you want to, but attempt to do it using backbonejs for extra points. Good luck!
-
 PROBLEM
 
 A spy agency has built a squad of robotic insects, that are small enough to infiltrate enemy buildings. The enemy headquarters has several rectangular rooms which must be navigated by the insects in order to reach and photograph secret documents.
@@ -39,11 +37,3 @@ FFRFFRFRRF
 Expected output:
 1 3 N
 5 1 E
-
-
-var ins = new Insect({x:5,y:5},1, 2, 'N')
-
-var ins = new Insect({x:5,y:5},1, 2, 'N')
-ins.processInput('LFLFLFLFF');
-1 3 N
-Object {x: 1, y: 3, h: "N"}
