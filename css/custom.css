@@ -1,0 +1,40 @@
+#signup,#login,#profile,.view{
+	min-height: 600px;
+}
+
+#signup,#login {
+	margin-top: 90px;
+}
+
+#profile {
+	margin-top: 35px;
+}
+
+
+.row-centered {
+    text-align:center;
+}
+
+
+.col-centered {
+    display:inline-block;
+    float:none;
+    /* reset the text-align */
+    text-align:left;
+    /* inline-block space fix 
+    margin-right:-4px;*/
+}
+
+
+.inline {
+	display: inline;
+	text-align:center;
+}
+
+.lurl_list {
+	color: #00bfff !important ;
+}
+
+.text_fix {
+	text-align:left; !important ;
+}
