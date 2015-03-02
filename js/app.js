@@ -20,7 +20,7 @@ function process(){
 	
 	var insectCount = (input.length - 1) / 2;
 	var insectArray = new Array(insectCount);
-		
+	
 	var boardInit = input[0].split(' ');
 	var board = {
 		x: boardInit[0],
@@ -33,17 +33,17 @@ function process(){
 		insectInit = insectInit.split(' ');		// split the values in the insect init line.	
 		
 		console.log(insectInit);
-		insectArray[i] = new Insect(board, insectInit.shift(), insectInit.shift(), insectInit.shift());		// initialize insect.
-		
-		var out = insectArray[i].processInput(input[++j].toString());
-		
-		$("#out").val($("#out").val() + out.x +' '+ out.y +' '+ out.h +'\n');
-		
+		insectArray[i] = new Insect(board, insectInit[0], insectInit[1], insectInit[2]);		// initialize insect.
+		insectArray[i].processInput(input[++j].toString());										//give them instructions.
+
 		console.log(insectArray[i]);
-		console.log('out',out);
-		
-		
-		
+	}
+	
+	for(var i in insectArray){
+		if(insectArray[i]) {	//will skip invalid insects.
+			var out = insectArray[i].move();
+			$("#out").val($("#out").val() + out.x +' '+ out.y +' '+ out.h +'\n');
+		}
 	}
 	
 	

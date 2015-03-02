@@ -51,8 +51,10 @@ function Insect(_board, x, y, h) {
 		this.y = y;
 		this.h = h;		//heading char
 	}
-	else
-		return null;
+	else {
+		console.log('invalid insect- ',arguments);
+		return false;
+	}
 }
 
 Insect.prototype = {

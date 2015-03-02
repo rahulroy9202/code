@@ -1,4 +1,3 @@
-//a code challenge. no purpose here. just wanted to test it in console.
 /*
 
 PROBLEM STATEMENT
@@ -61,10 +60,15 @@ Insect.prototype = {
 	
 	processInput: function( _line ) {		// expecting string as argument
 		
-		var input = _line.split('');
+		this.input = _line.split('');
 		
-		for(var i in input) {
-			var x = 'LRF'.indexOf(input[i])
+	},
+	
+	
+	move: function() {
+		
+		for(var i in this.input) {
+			var x = 'LRF'.indexOf(this.input[i])
 			switch(x) {
 				case 0: this.turnLeft();
 					break;
