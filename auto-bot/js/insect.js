@@ -21,11 +21,10 @@ Insect.prototype = {
 	},
 	
 	move: function() {
-		var i;
-		
+	
 		if(this.state !== 2) {
 		
-			for(i = 0; i < this.input.length; i++) {
+			for(var i = 0; i < this.input.length; i++) {
 				
 				var x = 'LRF'.indexOf(this.input[i]);
 				
@@ -38,21 +37,21 @@ Insect.prototype = {
 							if(this.room.checkCollision(this)) {
 								this.state = 2;
 								console.log('boom!! collided after- '+i,this);
-								return this.output('damaged');
+								return;
 							}
 						break;
-					default: return this.output("unknown instruction - "+this.input[i]);
+					default: throw("unknown instruction - "+this.input[i]);
 				}	
 				this.draw();				// to draw on room. <not implimented>
 			}
 			
 			this.state = 1;
-			return this.output('');			// console output as described in challenge.
+			return;			// console output as described in challenge.
 		
 		}
 		else {
 			console.log('boom!! damaged before moving ',this);
-			return this.output('damaged');
+			return;
 		}
 	},
 	
@@ -92,9 +91,5 @@ Insect.prototype = {
 	
 	draw: function() {
 		// TODO - Impliment Draw
-	},
-	
-	output: function(_status) {
-		return ({ x: this.x, y: this.y, h: this.h, status: _status });
 	}
 }

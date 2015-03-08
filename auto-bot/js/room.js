@@ -27,7 +27,7 @@ Room.prototype = {
 		
 		for(var i in this.insects) {
 			
-			if( (this.insects[i] instanceof Insect) && (this.insects[i] !== insect) && (this.insects[i].x === insect.x) && (this.insects[i].y === insect.y) ) {
+			if( (this.insects[i] instanceof Insect) && (this.insects[i] !== insect) && (this.insects[i].x === insect.x) && (this.insects[i].y === insect.y) ) { // appropriate type check inserted.
 				
 				this.insects[i].state = 2;
 				return this.insects[i];
@@ -35,7 +35,25 @@ Room.prototype = {
 			}
 		}
 		return false;
-	}
+	},
+	
+	peek: function() {
+		
+		var result = '';
+		for(var i in this.insects) {
+			
+			if(this.insects[i] instanceof Insect) {		// appropriate type check inserted.
+				
+				result += this.insects[i].x.toString() + ' ' + this.insects[i].y.toString() + ' ' + this.insects[i].h;
+				
+				if(this.insects[i].state === 2)
+					result += " damaged";
+				
+				result += "\n";
+			}
+		}
+		return result;
+	},
 
 }
 

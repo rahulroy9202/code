@@ -24,9 +24,11 @@ function process() {
 		for(var i in insectArray) {
 			if(insectArray[i]) {					//will skip invalid insects.
 				var out = insectArray[i].move();	//execute instructions for each insect one after the other.
-				$("#out").val($("#out").val() + out.x +' '+ out.y +' '+ out.h + ' ' + out.status +'\n');
+				//$("#out").val($("#out").val() + out.x +' '+ out.y +' '+ out.h + ' ' + out.status +'\n');
+				
 			}
 		}
+		$("#out").val(room.peek());
 	}
 	catch(e) {
 		$("#out").val("error- please check if input is valid- " + e.toString());
