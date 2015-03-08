@@ -14,16 +14,25 @@ Room.prototype = {
 	
 	addInsect: function(insect) {
 		if(insect instanceof Insect) {
-			this.insects.push(insect);
-			if (this.checkCollision(insect))
+			if (this.checkCollision(insect)) {
 				throw "two insect in one cell";
+			}
+			this.insects.push(insect);
 		}
+		else
+			throw "not insect - cannot add to room";
 	},
 	
 	checkCollision: function(insect) {
-		for(var i in this.insects){
-			if( (this.insects[i] !== insect) && (this.insects[i].x === insect.x) && (this.insects[i].y === insect.y) )
+		
+		for(var i in this.insects) {
+			
+			if( (this.insects[i] instanceof Insect) && (this.insects[i] !== insect) && (this.insects[i].x === insect.x) && (this.insects[i].y === insect.y) ) {
+				
+				this.insects[i].state = 2;
 				return this.insects[i];
+				
+			}
 		}
 		return false;
 	}

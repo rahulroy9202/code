@@ -1,0 +1,19 @@
+{
+  "name": "hapi-again",
+  "version": "1.0.0",
+  "description": "checking out new hapi",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "hapi",
+    "demo",
+    "node.js"
+  ],
+  "author": "rahulroy9202@gmail.com",
+  "license": "null",
+  "dependencies": {
+    "hapi": "^8.2.0"
+  }
+}

@@ -14,7 +14,7 @@ function process() {
 			var insectInit = input[j];				// j is line with info about insect position.
 			insectInit = insectInit.split(' ');		// split the values in the insect init line.	
 			
-			console.log(insectInit);
+			//console.log(insectInit);
 			insectArray[i] = new Insect(room, +insectInit[0], +insectInit[1], insectInit[2]);		// initialize insect.
 			insectArray[i].processInput(input[++j].toString());										// set their instructions.
 

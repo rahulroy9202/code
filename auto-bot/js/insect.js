@@ -6,7 +6,7 @@ function Insect(_room, x, y, h) {
 		this.y = y;
 		this.h = h;		//heading char
 		this.room.addInsect(this);
-		this.isMoving = false;
+		this.state = 0;		//0 init, 1 moved, 2 damaged.
 	}
 	else
 		throw "insect init error";
@@ -21,24 +21,39 @@ Insect.prototype = {
 	},
 	
 	move: function() {
+		var i;
 		
-		this.isMoving = true;
-		for(var i in this.input) {
-			var x = 'LRF'.indexOf(this.input[i])
-			switch(x) {
-				case 0: this.turnLeft();
-					break;
-				case 1: this.turnRight();
-					break;
-				case 2: this.moveForward();
-						if(this.room.checkCollision(this))
-							return this.output('boom!! collided after '+i);
-					break;
-				default: return this.output("unknown instruction - "+this.input[i]);
-			}	
-			this.draw();				// to draw on room. <not implimented>
+		if(this.state !== 2) {
+		
+			for(i = 0; i < this.input.length; i++) {
+				
+				var x = 'LRF'.indexOf(this.input[i]);
+				
+				switch(x) {
+					case 0: this.turnLeft();
+						break;
+					case 1: this.turnRight();
+						break;
+					case 2: this.moveForward();
+							if(this.room.checkCollision(this)) {
+								this.state = 2;
+								console.log('boom!! collided after- '+i,this);
+								return this.output('damaged');
+							}
+						break;
+					default: return this.output("unknown instruction - "+this.input[i]);
+				}	
+				this.draw();				// to draw on room. <not implimented>
+			}
+			
+			this.state = 1;
+			return this.output('');			// console output as described in challenge.
+		
 		}
-		return this.output('');			// console output as described in challenge.
+		else {
+			console.log('boom!! damaged before moving ',this);
+			return this.output('damaged');
+		}
 	},
 	
 	moveForward: function() {
@@ -76,12 +91,10 @@ Insect.prototype = {
 	},
 	
 	draw: function() {
-		// TODO - Impliment Draw 
-		//console.log(this);
+		// TODO - Impliment Draw
 	},
 	
 	output: function(_status) {
-		this.isMoving = false;
 		return ({ x: this.x, y: this.y, h: this.h, status: _status });
 	}
 }
