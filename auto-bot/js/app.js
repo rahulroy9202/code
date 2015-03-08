@@ -14,7 +14,6 @@ function process() {
 			var insectInit = input[j];				// j is line with info about insect position.
 			insectInit = insectInit.split(' ');		// split the values in the insect init line.	
 			
-			//console.log(insectInit);
 			insectArray[i] = new Insect(room, +insectInit[0], +insectInit[1], insectInit[2]);		// initialize insect.
 			insectArray[i].processInput(input[++j].toString());										// set their instructions.
 
@@ -22,9 +21,9 @@ function process() {
 		}
 		
 		for(var i in insectArray) {
-			if(insectArray[i]) {					//will skip invalid insects.
-				var out = insectArray[i].move();	//execute instructions for each insect one after the other.
-				//$("#out").val($("#out").val() + out.x +' '+ out.y +' '+ out.h + ' ' + out.status +'\n');
+			if(insectArray[i] instanceof Insect) {			
+				
+				insectArray[i].move();	//execute instructions for each insect one after the other.
 				
 			}
 		}
