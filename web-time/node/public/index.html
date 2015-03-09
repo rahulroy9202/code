@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Socket.IO</title>
+  </head>
+  <style>
+  #time{
+	margin: 50px;
+  }
+  </style>
+<!-- <script src="/socket.io/socket.io.js"></script> -->
+<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+<script>
+  var socket = io();
+  
+  socket.on('time_broadcast', function(time){
+	console.log(time);
+    $('#t').html(new Date(time));
+  });
+  
+</script>
+  <body>
+    <div id="time">
+	   <h4>Server Time : <span id="t">...server-time...</span></h4>
+	<div>
+  </body>
+</html>

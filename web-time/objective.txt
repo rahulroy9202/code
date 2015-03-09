@@ -1,0 +1,4 @@
+1) Write a simple http server that serves a webpage
+2) The webpage opens a WebSocket connection to the same server
+3) The server sends the server time every second to the webpage via the WebSocket connection
+4) The webpage displays the time every time it gets it from the WebSocket.
