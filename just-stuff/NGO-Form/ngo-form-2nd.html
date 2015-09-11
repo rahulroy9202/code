@@ -330,52 +330,54 @@
     <!-- ./NGO Onboarding Form Stage 2 -->
 
     <script type="text/javascript">
-        
-        var count = 2,
-            min = 1,
-            max = 5;
+        ;
+        (function (jQuery, window, undefined) {
+            var count = 2,
+                min = 1,
+                max = 5;
 
-        function switchStep(step) {
-            if (step <= max && step >= min) {
+            function switchStep(step) {
+                if (step <= max && step >= min) {
 
-                jQuery("#step" + count).css("display", "none");
-                jQuery("#phase" + count)[0].classList.remove("active");
+                    jQuery("#step" + count).css("display", "none");
+                    jQuery("#phase" + count)[0].classList.remove("active");
 
-                count = step;
+                    count = step;
 
-                jQuery("#step" + count).css("display", "block");
-                jQuery("#phase" + count)[0].classList.add("active");
+                    jQuery("#step" + count).css("display", "block");
+                    jQuery("#phase" + count)[0].classList.add("active");
+                }
+
+                if (count === max) {
+                    jQuery("#button_nxt").css("display", "none");
+                    jQuery("#button_sub").css("display", "block");
+                } else {
+                    jQuery("#button_nxt").css("display", "block");
+                }
+
+                if (count === min) {
+                    jQuery("#button_prev").css("display", "none");
+
+                } else {
+                    jQuery("#button_prev").css("display", "block");
+                }
+
             }
 
-            if (count === max) {
-                jQuery("#button_nxt").css("display", "none");
-                jQuery("#button_sub").css("display", "block");
-            } else {
-                jQuery("#button_nxt").css("display", "block");
-            }
+            jQuery("#button_nxt").click(function () {
+                switchStep(count + 1);
+            });
 
-            if (count === min) {
-                jQuery("#button_prev").css("display", "none");
+            jQuery("#button_prev").click(function () {
+                switchStep(count - 1);
+            });
 
-            } else {
-                jQuery("#button_prev").css("display", "block");
-            }
+            jQuery(".js-form-icon").click(function (event) {
+                // damn it. if u pass string, u will get anomalies.
+                switchStep(+(event.target.id.slice(-1)));
+            });
 
-        }
-
-        jQuery("#button_nxt").click(function () {
-            switchStep(count + 1);
-        });
-
-        jQuery("#button_prev").click(function () {
-            switchStep(count - 1);
-        });
-
-        jQuery(".js-form-icon").click(function (event) {
-            switchStep(+(event.target.id.slice(-1)));
-        });
-        
-        
+        })(jQuery, window);
     </script>
 </body>
 
