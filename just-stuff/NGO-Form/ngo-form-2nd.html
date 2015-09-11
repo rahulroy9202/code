@@ -295,26 +295,29 @@
                         <div id="step5" class="member-details">
                             <span class="form-title">5. Member Details</span>
                             <div class="clear"></div>
-                            <div class="row">
-                                <div class="col-xs-12 col-sm-6 col-md-3 info">
-                                    <label>Name<i>*</i></label>
-                                    <input type="text" class="form-control" placeholder="Name" />
+                            <div id="row-container">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-6 col-md-3 info">
+                                        <label>Name<i>*</i></label>
+                                        <input type="text" class="form-control" placeholder="Name" />
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-3 info">
+                                        <label>Contact Number<i>*</i></label>
+                                        <input type="text" class="form-control" placeholder="Contact Number" />
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-3 info">
+                                        <label>E mail ID<i>*</i></label>
+                                        <input type="text" class="form-control" placeholder="E mail ID" />
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-3 info">
+                                        <label>Designation<i>*</i></label>
+                                        <input type="text" class="form-control" placeholder="Designation" />
+                                    </div>
                                 </div>
-                                <div class="col-xs-12 col-sm-6 col-md-3 info">
-                                    <label>Contact Number<i>*</i></label>
-                                    <input type="text" class="form-control" placeholder="Contact Number" />
-                                </div>
-                                <div class="col-xs-12 col-sm-6 col-md-3 info">
-                                    <label>E mail ID<i>*</i></label>
-                                    <input type="text" class="form-control" placeholder="E mail ID" />
-                                </div>
-                                <div class="col-xs-12 col-sm-6 col-md-3 info">
-                                    <label>Designation<i>*</i></label>
-                                    <input type="text" class="form-control" placeholder="Designation" />
-                                </div>
+
                             </div>
                             <div class="add-list-wrapper">
-                                <input type="button" class="add-file-btn" value="Add List" />
+                                <input id="add-row-button" type="button" class="add-file-btn" value="Add List" />
                             </div>
                         </div>
 
@@ -334,7 +337,8 @@
         (function (jQuery, window, undefined) {
             var count = 2,
                 min = 1,
-                max = 5;
+                max = 5,
+                row_body = false;
 
             function switchStep(step) {
                 if (step <= max && step >= min) {
@@ -375,6 +379,12 @@
             jQuery(".js-form-icon").click(function (event) {
                 // damn it. if u pass string, u will get anomalies.
                 switchStep(+(event.target.id.slice(-1)));
+            });
+            
+            jQuery("#add-row-button").click(function () {
+                if(!row_body)
+                    row_body = jQuery("#row-container").html();
+                jQuery("#row-container").append(row_body);
             });
 
         })(jQuery, window);
