@@ -1,0 +1,211 @@
+ul,ol {
+    list-style: none;
+    padding-left: 0
+}
+.section-step h2.strong {
+    text-align: center;
+    padding: 30px 0 0 0;
+    font-weight: normal
+}
+.section-step h3.strong {
+    text-align: center;
+    margin-bottom: 40px;
+    font-weight: normal;
+    font-size: 16px;
+    color:#bbb;
+}
+.section-step {
+    border-top: 1px solid #e5e5e5;
+}
+
+.section-step .step {
+    width: 500px;
+    margin: -20px auto 0;
+    position: relative;
+    padding-bottom: 35px;
+}
+
+.section-step .step li {
+    float: left;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 37px;
+    color: #b3b3b3;
+    text-transform: uppercase;
+    background: url("../images/ngo-form/divider.gif") 0 0 no-repeat;
+    width: 45px;
+    height: 37px;
+    padding-right: 90px
+}
+
+.section-step .step li.step-finish {
+    background: none;
+    padding: 0
+}
+
+.section-step .step li a {
+    display: block;
+    width: 35px;
+    height: 35px;
+    background: #e6e6e6;
+    font-size: 20px;
+    color: #fff;
+    text-align: center;
+    -moz-border-radius: 18px;
+    -webkit-border-radius: 18px;
+    border-radius: 18px
+}
+
+.section-step .step li a:hover,.section-step .step li a.current {
+    background-color: #2e9bfd;
+    text-decoration: none
+}
+
+.ngo-onboarding-form{margin:50px auto;max-width:600px;color:#4c4c4c;background:#f6f5f5;padding:15px 30px 30px 30px;border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px;}
+.stage2form{max-width:800px;}
+.ngo-onboarding-form span.form-title{font-size:28px;font-weight:300;color:#000000;padding-bottom:30px;float:left;text-transform:uppercase;}
+.ngo-onboarding-form span.form-title h4{font-size:16px;font-weight:500;text-transform:capitalize;}
+.ngo-onboarding-form label{font-size:16px;font-weight:normal;text-transform:uppercase;}
+.ngo-onboarding-form label.control-label{text-align:left;}
+.ngo-onboarding-form input[type="text"]{border:1px solid #BDBCBC;}
+.ngo-onboarding-form .form-group{margin-bottom:20px;}
+.ngo-onboarding-form textarea.form-control, .ngo-onboarding-form select.form-control{padding:5px 12px;}
+.ngo-onboarding-form label.radio{width:90px;float:left;}
+.ngo-onboarding-form .radio label, .ngo-onboarding-form .checkbox label{min-height:18px}
+.ngo-onboarding-form .checkbox label{padding-left:0;}
+.small-width-field{max-width:300px;}
+.sm-presence{margin-bottom:15px;}
+.ngo-onboarding-form .radio {margin:5px 0;}
+.ngo-onboarding-form .radio + .radio{margin:5px 0;}
+.mobile-text{padding-left:0px;}
+.ngo-onboarding-form i{font-style:normal;color:#ff0000;}
+.width50{width:50%;display:inline-block;}
+.add-file-wrapper{display:inline-block;margin:0 0 0 15px;}
+.document-wrapper{}
+.file-name{display:inline-block;width:175px;padding:0 0 0 10px;color:#7e7e7e;}
+.file-status{display:inline-block;width:100px;padding:0 0 0 10px;color:#7e7e7e;}
+.add-file-btn{background:#ffffff url(../images/ngo-form/file-add.png) no-repeat 5px;padding:5px 5px 5px 25px;border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px;border:1px solid #BDBCBC;font-size:12px;}
+.add-file-btn:hover, .add-file-btn:focus{background-color:#eeeeee;}
+.add-list-wrapper{margin:15px 0 0 0;text-align:right;}
+.add-list-wrapper .add-file-btn{font-size:14px;}
+
+/* Radiobutton CSS */
+input[type=radio].css-radio {position:absolute;z-index:-1000;left:-1000px;overflow:hidden;clip:rect(0 0 0 0);height:1px;width:1px;margin:-1px;padding:0;border:0;}
+input[type=radio].css-radio + label.radio-label {padding:0 30px;height:18px;display:inline-block;background-repeat:no-repeat;background-position:0 0;vertical-align:top;cursor:pointer;}
+input[type=radio].css-radio:checked + label.radio-label {background-position:0 -18px;}
+label.radio-label {background-image:url(../images/ngo-form/cssradiobutton.png);-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;text-transform:capitalize;}
+
+/* Checkbox CSS */
+input[type=checkbox].css-checkbox {position:absolute;z-index:-1000;left:-1000px;overflow:hidden;clip:rect(0 0 0 0);height:1px;width:1px;margin:-1px;padding:0;border:0;}
+input[type=checkbox].css-checkbox + label.css-label {padding-left:35px;height:20px;display:inline-block;background-repeat:no-repeat;background-position: 0 0;vertical-align:middle;cursor:pointer;}
+input[type=checkbox].css-checkbox:checked + label.css-label {background-position:0 -20px;}
+label.css-label {background-image:url(../images/ngo-form/csscheckbox-mobile.png);-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}
+
+.ngo-form-button{
+	font-weight:normal;
+	line-height:normal;
+	text-decoration:none;
+	text-align:center;
+	font-size:24px;
+	float:right;
+	margin:20px 0 0 10px;
+	padding:10px 40px;
+}
+.ngo-form-button:hover, .ngo-form-button:active, .ngo-form-button:focus{border:1px solid #fff;outline:none;}
+
+.organisation{display:block;}
+.registration{display:none;}
+.ngo-own-details{display:none;}
+.primary-person{display:none;}
+#button_prev{display:block;}
+#button_sub{display:none;}
+
+.thank-you{width:100%;font-size:28px;font-weight:300;color:#000000;padding:30px 0;float:left;text-transform:uppercase;text-align:center;}
+
+.membership-form{display:none;}
+.basic-info{display:block;}
+.bank-account{display:none;}
+.fcra-details{display:none;}
+.other-details{display:none;}
+.member-details{display:none;}
+.member-details .row{padding:0 5px;}
+
+.other-details label{width:50%;}
+.other-details input{display:inline;}
+/*.membership-form .form-control[readonly]{background:none;border:0;box-shadow:none;}*/
+
+.stage2tabs{max-width:800px;margin:50px auto 0 auto;}
+.stage2tabs .tabs{padding:0;}
+.stage2tabs li{display:inline-block;margin-right:5px;}
+.stage2tabs li a{display:inline-block;border:1px solid #bdbcbc;border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px;padding:40px 20px 10px;text-decoration:none;text-align:center;}
+.stage2tabs li a:hover, .stage2tabs li a:focus, .stage2tabs li a.active{outline:0;color:#ffffff;border-color:#119ef1;}
+
+.membership-icon{background:url(../images/ngo-form/membership-icon.png) no-repeat center 5px;}
+a.membership-icon:hover, a.membership-icon:focus, a.membership-icon.active{background:#119ef1 url(../images/ngo-form/membership-icon.png) no-repeat center 5px;}
+
+.basic-info-icon{background:url(../images/ngo-form/basic-info-icon.png) no-repeat center 5px;}
+a.basic-info-icon:hover, a.basic-info-icon:focus, a.basic-info-icon.active{background:#119ef1 url(../images/ngo-form/basic-info-icon.png) no-repeat center 5px;}
+
+.bank-icon{background:url(../images/ngo-form/bank-icon.png) no-repeat center 5px;}
+a.bank-icon:hover, a.bank-icon:focus, a.bank-icon.active{background:#119ef1 url(../images/ngo-form/bank-icon.png) no-repeat center 5px;}
+
+.fcra-icon{background:url(../images/ngo-form/fcra-icon.png) no-repeat center 5px;}
+a.fcra-icon:hover, a.fcra-icon:focus, a.fcra-icon.active{background:#119ef1 url(../images/ngo-form/fcra-icon.png) no-repeat center 5px;}
+
+.document-icon{background:url(../images/ngo-form/document-icon.png) no-repeat center 5px;}
+a.document-icon:hover, a.document-icon:focus, a.document-icon.active{background:#119ef1 url(../images/ngo-form/document-icon.png) no-repeat center 5px;}
+
+.member-icon{background:url(../images/ngo-form/member-icon.png) no-repeat center 5px;}
+a.member-icon:hover, a.member-icon:focus, a.member-icon.active{background:#119ef1 url(../images/ngo-form/member-icon.png) no-repeat center 5px;}
+
+
+@media only screen and (max-width: 991px) {
+	.member-details .info{margin-bottom:20px;}
+	.stage2tabs li a{padding:40px 10px 10px;}
+	.file-name{width:150px;}
+	.file-status{width:100px;}
+}
+@media only screen and (max-width: 767px) {
+	.ngo-onboarding-form span.form-title{font-size:22px;}
+    .mobile-text{color:#000000;font-weight:bold !important;}
+	.button-next {float:right;margin:20px 0 0 10px;padding:10px 40px;}
+	.ngo-form-button{font-size:18px;padding:7px 25px;}
+	.section-step .step{width:300px;}
+	.section-step .step li {width:45px;padding-right:50px;}
+	.thank-you{font-size:24px;}
+	.other_details label{width:100%;}
+	.other_details input{margin:5px 0 0 0;}
+	.stage2tabs .tabs{padding:0 10px;}
+	.width50{width:100%;}
+	.document-wrapper{}
+	.add-file-wrapper{margin:5px 0 0 0;}
+}
+@media only screen and (max-width: 639px) {
+	.stage2tabs li{width:30%;margin:0 10px 10px 0;}
+	.stage2tabs li a{width:100%;}
+	
+	/*.membership-icon{background:url(../images/ngo-form/membership-icon.png) no-repeat 5px 5px;}
+	a.membership-icon:hover, a.membership-icon:focus, a.membership-icon.active{background:#119ef1 url(../images/ngo-form/membership-icon.png) no-repeat 5px 5px;;}
+
+	.basic-info-icon{background:url(../images/ngo-form/basic-info-icon.png) no-repeat 5px 5px;;}
+	a.basic-info-icon:hover, a.basic-info-icon:focus, a.basic-info-icon.active{background:#119ef1 url(../images/ngo-form/basic-info-icon.png) no-repeat 5px 5px;;}
+
+	.bank-icon{background:url(../images/ngo-form/bank-icon.png) no-repeat 5px 5px;;}
+	a.bank-icon:hover, a.bank-icon:focus, a.bank-icon.active{background:#119ef1 url(../images/ngo-form/bank-icon.png) no-repeat 5px 5px;;}
+
+	.fcra-icon{background:url(../images/ngo-form/fcra-icon.png) no-repeat 5px 5px;;}
+	a.fcra-icon:hover, a.fcra-icon:focus, a.fcra-icon.active{background:#119ef1 url(../images/ngo-form/fcra-icon.png) no-repeat 5px 5px;;}
+
+	.document-icon{background:url(../images/ngo-form/document-icon.png) no-repeat 5px 5px;;}
+	a.document-icon:hover, a.document-icon:focus, a.document-icon.active{background:#119ef1 url(../images/ngo-form/document-icon.png) no-repeat 5px 5px;;}
+
+	.member-icon{background:url(../images/ngo-form/member-icon.png) no-repeat 5px 5px;;}
+	a.member-icon:hover, a.member-icon:focus, a.member-icon.active{background:#119ef1 url(../images/ngo-form/member-icon.png) no-repeat 5px 5px;;}*/
+	
+}
+@media only screen and (max-width: 480px) {
+	.stage2tabs li{width:45%;margin:0 2% 10px 2%;}
+	.stage2tabs li a{width:100%;}
+	.file-name{width:130px;}
+}
+

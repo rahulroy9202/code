@@ -16,7 +16,6 @@ app.use(bodyParser.urlencoded({		// to support URL-encoded bodies
 	extended: true
 }));
 
-
 app.use(function(req, res, next) {
 	//console.log(req.headers);
 	console.log(req.body);
