@@ -1,6 +1,6 @@
 use fundraising
 
-// Total campaigns 
+// Campaigns 
 print('Total campaigns in LFC 16')
 db.campaigns.find({created_at: {
         $gte: ISODate("2016-03-07T18:30:00.000Z"),
@@ -10,7 +10,7 @@ db.campaigns.find({created_at: {
 print('Total campaigns in Product')
 db.campaigns.count()
 
-// Total invites
+// Invites
 print('Total invites in LFC 16')
 db.inviteemails.find({created: {
         $gte: ISODate("2016-03-07T18:30:00.000Z"),
@@ -23,3 +23,10 @@ db.inviteemails.count()
 // Total number of donations
 print('Total number of donations')
 db.donations.find({"status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']}}).count()
+
+// Average donation amount 
+print('Average donation amount')
+db.donations.aggregate([
+	{ $match: { "status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']} } },
+	{ $group: { _id: "$currency_code", "avg_donation": { "$avg": "$amount" } } }
+])
