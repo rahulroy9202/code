@@ -24,6 +24,13 @@ db.inviteemails.count()
 print('Total number of donations')
 db.donations.find({"status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']}}).count()
 
+// Total donation amount 
+print('Total donation amount')
+db.donations.aggregate([
+	{ $match: { "status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']} } },
+	{ $group: { _id: "$currency_code", "total_donation": { "$sum": "$amount" } } }
+])
+
 // Average donation amount 
 print('Average donation amount')
 db.donations.aggregate([
