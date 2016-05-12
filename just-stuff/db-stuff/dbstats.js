@@ -46,9 +46,6 @@ db.campaigns.aggregate([
 	{ $group: { _id: null, count: { $sum: 1 }}}
 ]);
 
-// % funding targets reached via campaigns 
-// What % of campaigns achieved funding target
-
 // No. of donors converted to fundraisers and as % of overall donors  
 // % of donors woh are fundraisers
 print('No. of Fundraisers');
@@ -63,3 +60,19 @@ db.donations.aggregate([
 	{ $group: { _id: null, count: { $sum: 1 }}}
 ]);
 
+// % funding targets reached via campaigns 
+// What % of campaigns achieved funding target
+print('% funding targets reached via campaigns');
+var myCursor =  db.campaigns.find({});
+var fundedCount = 0;
+var totalCount = 0;
+myCursor.forEach(function(campaign) {
+	totalCount++;
+	db.statistics.find({type:'campaign', _id:campaign._id}, function(stats){
+		if(campaign.target <= stats.raised_amount) {
+			fundedCount++;
+		}
+	});
+});
+var percentFunded = (fundedCount/totalCount)*100;
+print(percentFunded);
