@@ -42,6 +42,24 @@ db.donations.aggregate([
 print('No. of Fundraisers (since launch)');
 db.campaigns.aggregate([
 	{ $match: {created_at: {$gte: ISODate("2016-03-07T18:30:00.000Z")}}},
-	{ $group: { _id: "$creator" }},
+	{ $group: { _id: "$creator.id" }},
 	{ $group: { _id: null, count: { $sum: 1 }}}
 ]);
+
+// % funding targets reached via campaigns 
+// What % of campaigns achieved funding target
+
+// No. of donors converted to fundraisers and as % of overall donors  
+// % of donors woh are fundraisers
+print('No. of Fundraisers');
+db.campaigns.aggregate([
+	{ $group: { _id: "$creator.id" }},
+	{ $group: { _id: null, count: { $sum: 1 }}}
+]);
+
+print('No. of Donors');
+db.donations.aggregate([
+	{ $group: { _id: "$user._id" }},
+	{ $group: { _id: null, count: { $sum: 1 }}}
+]);
+
