@@ -31,11 +31,25 @@ db.donations.aggregate([
 	{ $group: { _id: "$currency_code", "total_donation": { "$sum": "$amount" } } }
 ]);
 
+// Total Amount of Donations on Campaigns
+print('\nTotal Amount of Donations on Campaigns');
+db.donations.aggregate([
+	{ $match: { "status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']}, "campaign": { $exists: true} } },
+	{ $group: { _id: "$currency_code", "total_donation": { "$sum": "$amount" } } }
+]);
+
 // Average donation amount 
 print('\nAverage donation amount');
 db.donations.aggregate([
 	{ $match: { "status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']} } },
 	{ $group: { _id: "$currency_code", "avg_donation": { "$avg": "$amount" } } }
+]);
+
+// Max donation amount 
+print('\nHighest Individual Donation (INR and foreign currency, separate)');
+db.donations.aggregate([
+	{ $match: { "status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']} } },
+	{ $group: { _id: "$currency_code", "max_donation": { "$max": "$amount" } } }
 ]);
 
 // No. of Fundraisers (since launch)
@@ -74,3 +88,5 @@ myCursor.forEach(function(campaign) {
 });
 var percentFunded = (fundedCount/totalCount)*100;
 print(percentFunded);
+
+
