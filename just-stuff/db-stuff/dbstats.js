@@ -84,6 +84,14 @@ print(donors.length);
 print('\nNo. of donors converted to fundraisers and as % of overall donors');
 print((fundraisers.length/donors.length)*100);
 
+// NGO with most number of fundraisers
+print('\nNGO with most number of fundraisers');
+db.campaigns.aggregate([
+	{ $group: { _id: {nonprofit: {_id: "$nonprofit._id", name: "$nonprofit.name"}, user: "$creator.id"} }},
+	{ $group: { _id: "$_id.nonprofit", number_of_fundraisers: { $sum: 1 } }},
+	{ $sort: { "number_of_fundraisers": -1} },
+	{ $limit: 1 }
+]);
 
 // % funding targets reached via campaigns 
 // What % of campaigns achieved funding target
