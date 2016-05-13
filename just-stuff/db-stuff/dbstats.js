@@ -24,6 +24,10 @@ db.inviteemails.count();
 print('\nTotal number of donations');
 db.donations.find({"status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']}}).count();
 
+// Number of Donations on Campaigns
+print('\nNumber of Donations on Campaigns');
+db.donations.find({"status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']}, "campaign": { $exists: true }}).count();
+
 // Total donation amount 
 print('\nTotal donation amount');
 db.donations.aggregate([
@@ -50,6 +54,15 @@ print('\nHighest Individual Donation (INR and foreign currency, separate)');
 db.donations.aggregate([
 	{ $match: { "status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']} } },
 	{ $group: { _id: "$currency_code", "max_donation": { "$max": "$amount" } } }
+]);
+
+// NGO with most number of foreign donations (in LFC '16)
+print('\nNGO with most number of foreign donations (in LFC 16)');
+db.donations.aggregate([
+	{ $match: { "status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']}, "currency_code": {$ne: 'INR'} } },
+	{ $group: { _id: { _id:"$nonprofit._id", name: "$nonprofit.name"}, "total_no_donation": { "$sum": 1 } } },
+	{ $sort: { "total_no_donation": -1} },
+	{ $limit: 1 }
 ]);
 
 // No. of Fundraisers (since launch)
