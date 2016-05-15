@@ -110,4 +110,32 @@ myCursor.forEach(function(campaign) {
 var percentFunded = (fundedCount/totalCount)*100;
 print(percentFunded);
 
+// Donations in April v March
+function donationAmountAndCountInInterval(interval) {
+	var totals = db.donations.aggregate([
+		{ $match: { "status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']}, "created_at": interval } },
+		{ $group: { _id: "$currency_code", "total_donation": { "$sum": "$amount" } } }
+	]);
+	print('total amounts', tojson(totals[0]));
+	
+	var count = db.donations.find({"status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']}, "created_at": interval}).count();	
+	print('number of donations- ', count);
+}
+var start,end;
+start = new Date(2016,2,1);
+end = new Date(2016,2,31,23,59);
+var march = {
+	$gte: ISODate(start.toISOString()),
+	$lt: ISODate(end.toISOString())
+}
+print('\nNumber of Donations and Total Amount in March');
+donationAmountAndCountInInterval(march);
 
+start = new Date(2016,3,1);
+end = new Date(2016,3,30,23,59);
+var april = {
+        $gte: ISODate("2016-03-07T18:30:00.000Z"),
+        $lt: ISODate("2016-04-28T18:29:00.000Z")
+    }
+print('\nNumber of Donations and Total Amount in April');
+donationAmountAndCountInInterval(april);
