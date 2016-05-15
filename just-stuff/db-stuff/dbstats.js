@@ -122,7 +122,7 @@ db.donations.aggregate([
 	{ $group: { _id: "$currency_code", "total_donation": { "$sum": "$amount" } } }
 ]);
 print('number of donations');
-db.donations.find({"status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']}, "created_at": match}).count();	
+db.donations.find({"status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']}, "created_at": march}).count();
 
 
 start = new Date(2016,3,1);
