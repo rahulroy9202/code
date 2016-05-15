@@ -147,3 +147,12 @@ db.donations.aggregate([
 	{ $sort: { "amount": -1} },
 	{ $sort: { "_id.name": -1} }
 ]);
+
+// NGO amount raised
+print('\nNGO amount raised');
+db.donations.aggregate([
+	{ $match: { "status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']} } },
+	{ $group: { _id: { _id:"$nonprofit._id", name: "$nonprofit.name", currency_code :"$currency_code"}, "amount": { "$sum": "$amount" } } },
+	{ $sort: { "amount": -1} },
+	{ $sort: { "_id.name": -1} }
+]);
