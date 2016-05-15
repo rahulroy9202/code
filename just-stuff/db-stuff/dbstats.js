@@ -138,3 +138,12 @@ db.donations.aggregate([
 print('number of donations');
 db.donations.find({"status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']}, "created_at": april}).count();
 
+
+// NGO amount raised from foreign donations
+print('\nNGO amount raised from foreign donations');
+db.donations.aggregate([
+	{ $match: { "status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']}, "currency_code": {$ne: 'INR'} } },
+	{ $group: { _id: { _id:"$nonprofit._id", name: "$nonprofit.name", currency_code :"$currency_code"}, "amount": { "$sum": "$amount" } } },
+	{ $sort: { "amount": -1} },
+	{ $sort: { "_id.name": -1} }
+]);
