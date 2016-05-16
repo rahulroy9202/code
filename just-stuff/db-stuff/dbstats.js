@@ -124,7 +124,6 @@ db.donations.aggregate([
 print('number of donations');
 db.donations.find({"status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']}, "created_at": march}).count();
 
-
 start = new Date(2016,3,1);
 end = new Date(2016,3,30,23,59);
 var april = { $gte: ISODate("2016-03-07T18:30:00.000Z"), 	$lt: ISODate("2016-04-28T18:29:00.000Z") };
@@ -137,7 +136,6 @@ db.donations.aggregate([
 
 print('number of donations');
 db.donations.find({"status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']}, "created_at": april}).count();
-
 
 // NGO amount raised from foreign donations
 print('\nNGO amount raised from foreign donations');
@@ -155,4 +153,17 @@ db.donations.aggregate([
 	{ $group: { _id: { _id:"$nonprofit._id", name: "$nonprofit.name", currency_code :"$currency_code"}, "amount": { "$sum": "$amount" } } },
 	{ $sort: { "amount": -1} },
 	{ $sort: { "_id.name": -1} }
+]);
+
+// NGO with maximum number of donations in a single day
+print('\nNGO with maximum number of donations in a single day');
+db.donations.aggregate([
+	{ $match: { "status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']} } },
+	{ $project: { 
+		date: {day: {$dayOfMonth: '$created_at'}, month: {$month: '$created_at'}, year: {$year: '$created_at'}}, 
+		ngo: {name: '$nonprofit.name', _id: '$nonprofit._id'}}
+	},
+	{ $group: { _id: {date:"$date", ngo: '$ngo'}, total_no_donation: { $sum: 1 } } },
+	{ $sort: { "total_no_donation": -1} },
+	{ $limit: 1 }
 ]);
