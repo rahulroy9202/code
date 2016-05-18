@@ -26,7 +26,7 @@ db.donations.find({"status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']}}).co
 
 // Number of Donations on Campaigns
 print('\nNumber of Donations on Campaigns');
-db.donations.find({"status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']}, "campaign": { $exists: true }}).count();
+db.donations.find({"status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']}, "campaign": { $ne: null }}).count();
 
 // Total donation amount 
 print('\nTotal donation amount');
@@ -38,7 +38,7 @@ db.donations.aggregate([
 // Total Amount of Donations on Campaigns
 print('\nTotal Amount of Donations on Campaigns');
 db.donations.aggregate([
-	{ $match: { "status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']}, "campaign": { $exists: true} } },
+	{ $match: { "status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']}, "campaign": { $ne: null } } },
 	{ $group: { _id: "$currency_code", "total_donation": { "$sum": "$amount" } } }
 ]);
 
