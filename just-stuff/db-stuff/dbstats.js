@@ -22,44 +22,77 @@ db.inviteemails.count();
 
 // Total number of donations
 print('\nTotal number of donations');
-db.donations.find({"status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']}}).count();
+db.donations.find({
+	"status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']},
+	created_at: {
+		$gte: ISODate("2016-03-07T18:30:00.000Z"),
+		$lt: ISODate("2016-04-28T18:29:00.000Z")
+}}).count();
 
 // Number of Donations on Campaigns
 print('\nNumber of Donations on Campaigns');
-db.donations.find({"status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']}, "campaign": { $ne: null }}).count();
+db.donations.find({
+	"status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']},
+	"campaign": { $ne: null },
+	created_at: {
+		$gte: ISODate("2016-03-07T18:30:00.000Z"),
+		$lt: ISODate("2016-04-28T18:29:00.000Z")
+	}
+}).count();
 
 // Total donation amount 
 print('\nTotal donation amount');
 db.donations.aggregate([
-	{ $match: { "status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']} } },
+	{ $match: {
+		"status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']},
+		"created_at": {
+			$gte: ISODate("2016-03-07T18:30:00.000Z"),
+			$lt: ISODate("2016-04-28T18:29:00.000Z")
+		} } },
 	{ $group: { _id: "$currency_code", "total_donation": { "$sum": "$amount" } } }
 ]);
 
 // Total Amount of Donations on Campaigns
 print('\nTotal Amount of Donations on Campaigns');
 db.donations.aggregate([
-	{ $match: { "status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']}, "campaign": { $ne: null } } },
+	{ $match: {
+		"status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']},
+		"campaign": { $ne: null },
+		"created_at": {
+			$gte: ISODate("2016-03-07T18:30:00.000Z"),
+			$lt: ISODate("2016-04-28T18:29:00.000Z")
+		} } },
 	{ $group: { _id: "$currency_code", "total_donation": { "$sum": "$amount" } } }
 ]);
 
 // Average donation amount 
 print('\nAverage donation amount');
 db.donations.aggregate([
-	{ $match: { "status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']} } },
+	{ $match: {
+		"status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']},
+		"created_at": {
+			$gte: ISODate("2016-03-07T18:30:00.000Z"),
+			$lt: ISODate("2016-04-28T18:29:00.000Z")
+		} } },
 	{ $group: { _id: "$currency_code", "avg_donation": { "$avg": "$amount" } } }
 ]);
 
 // Max donation amount 
 print('\nHighest Individual Donation (INR and foreign currency, separate)');
 db.donations.aggregate([
-	{ $match: { "status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']} } },
+	{ $match: {
+		"status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']},
+		"created_at": {
+			$gte: ISODate("2016-03-07T18:30:00.000Z"),
+			$lt: ISODate("2016-04-28T18:29:00.000Z")
+		} } },
 	{ $group: { _id: "$currency_code", "max_donation": { "$max": "$amount" } } }
 ]);
 
 // NGO with most number of foreign donations (in LFC '16)
 print('\nNGO with most number of foreign donations (in LFC 16)');
 db.donations.aggregate([
-	{ $match: { "status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']}, "currency_code": {$ne: 'INR'} } },
+	{ $match: { "status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']}, "created_at": {$gte: ISODate("2016-03-07T18:30:00.000Z"),	$lt: ISODate("2016-04-28T18:29:00.000Z")},"currency_code": {$ne: 'INR'} } },
 	{ $group: { _id: { _id:"$nonprofit._id", name: "$nonprofit.name"}, "total_no_donation": { "$sum": 1 } } },
 	{ $sort: { "total_no_donation": -1} },
 	{ $limit: 1 }
@@ -87,6 +120,7 @@ print((fundraisers.length/donors.length)*100);
 // NGO with most number of fundraisers
 print('\nNGO with most number of fundraisers');
 db.campaigns.aggregate([
+	{ $match: { "created_at": {$gte: ISODate("2016-03-07T18:30:00.000Z"),	$lt: ISODate("2016-04-28T18:29:00.000Z")}}},
 	{ $group: { _id: {nonprofit: {_id: "$nonprofit._id", name: "$nonprofit.name"}, user: "$creator.id"} }},
 	{ $group: { _id: "$_id.nonprofit", number_of_fundraisers: { $sum: 1 } }},
 	{ $sort: { "number_of_fundraisers": -1} },
@@ -110,9 +144,9 @@ myCursor.forEach(function(campaign) {
 var percentFunded = (fundedCount/totalCount)*100;
 print(percentFunded);
 
-// Donations in April v March
+// Donations in April v March LFC 16
 var start,end;
-start = new Date(2016,2,1);
+start = new Date(2016,2,8,0,0);
 end = new Date(2016,2,31,23,59);
 var march = { $gte: ISODate(start.toISOString()), $lt: ISODate(end.toISOString()) };
 print('\nDonations in March');
@@ -125,7 +159,7 @@ print('number of donations');
 db.donations.find({"status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']}, "created_at": march}).count();
 
 start = new Date(2016,3,1);
-end = new Date(2016,3,30,23,59);
+end = new Date(2016,3,28,23,59);
 var april = { $gte: ISODate("2016-03-07T18:30:00.000Z"), 	$lt: ISODate("2016-04-28T18:29:00.000Z") };
 print('\nDonations in April');
 print('total amounts');
