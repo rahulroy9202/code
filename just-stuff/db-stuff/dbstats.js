@@ -133,7 +133,7 @@ db.donations.find({"status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']}, "cr
 
 start = new Date(2016,3,1);
 end = new Date(2016,3,28,23,59);
-var april = { $gte: ISODate("2016-03-07T18:30:00.000Z"), 	$lt: ISODate("2016-04-28T18:29:00.000Z") };
+var april = { $gte: ISODate(start.toISOString()), $lt: ISODate(end.toISOString()) };
 print('\nDonations in April');
 print('total amounts');
 db.donations.aggregate([
