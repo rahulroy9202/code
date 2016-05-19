@@ -10,11 +10,19 @@ var ngoCursor =  db.nonprofits.find({});
 ngoCursor.forEach(function(ngo) {
   var result = {};
   result.ngo_name = ngo.name;
-  result.ngo_id = ngo._id;
-  var donorsArr = db.donations.distinct("user._id", { 'nonprofit._id' : ngo._id.valueOf(), 'created_at': lfc16 });
+  var donorsArr = db.donations.distinct("user._id", { 'nonprofit._id' : ngo._id.valueOf(), 'created_at':lfc16, "status":{$in:['DISBURSED', 'SETTLED']} });
   result.unique_donors = donorsArr.length;
-  if(donorsArr.length > 0)
+  result.donations_count = db.donations.count({ 'nonprofit._id' : ngo._id.valueOf(), 'created_at':lfc16, "status":{$in:['DISBURSED', 'SETTLED']} });
+
+  result.donations = {};
+  var donCursor = db.donations.find({ 'nonprofit._id' : ngo._id.valueOf(), 'created_at':lfc16, "status":{$in:['DISBURSED', 'SETTLED']} });
+  donCursor.forEach(function(donation){
+    result.donations[donation.currency_code] = (result.donations[donation.currency_code] || 0 ) + donation.amount;
+  });
+
+  if(donorsArr.length > 0){
     resultArr.push(result);
+  }
 });
 printjson(resultArr);
 
