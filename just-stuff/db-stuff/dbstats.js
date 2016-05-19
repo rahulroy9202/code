@@ -108,6 +108,7 @@ var fundedCount = 0;
 var totalCount = 0;
 myCursor.forEach(function(campaign) {
 	totalCount++;
+	// todo - fix this
 	db.statistics.find({type:'campaign', _id:campaign._id}, function(stats){
 		if(campaign.target <= stats.raised_amount) {
 			fundedCount++;
