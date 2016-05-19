@@ -1,5 +1,6 @@
 use fundraising;
 
+var donationStatus = ['DISBURSED', 'SETTLED'];
 var startC,endC;
 startC = new Date(2016,2,8,0,0);
 endC = new Date(2016,3,28,23,59);
@@ -21,12 +22,12 @@ db.inviteemails.count();
 
 // Total number of donations
 print('\nTotal number of donations');
-db.donations.find({"status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']}, created_at: lfc16}).count();
+db.donations.find({"status" : {$in : donationStatus}, created_at: lfc16}).count();
 
 // Number of Donations on Campaigns
 print('\nNumber of Donations on Campaigns');
 db.donations.find({
-	"status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']},
+	"status" : {$in : donationStatus},
 	"campaign": { $ne: null },
 	created_at: lfc16
 }).count();
@@ -34,7 +35,7 @@ db.donations.find({
 // Total donation amount 
 print('\nTotal donation amount');
 db.donations.aggregate([
-	{ $match: {"status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']}, "created_at": lfc16 } },
+	{ $match: {"status" : {$in : donationStatus}, "created_at": lfc16 } },
 	{ $group: { _id: "$currency_code", "total_donation": { "$sum": "$amount" } } }
 ]);
 
@@ -42,7 +43,7 @@ db.donations.aggregate([
 print('\nTotal Amount of Donations on Campaigns');
 db.donations.aggregate([
 	{ $match: {
-		"status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']},
+		"status" : {$in : donationStatus},
 		"campaign": { $ne: null },
 		"created_at": lfc16 } },
 	{ $group: { _id: "$currency_code", "total_donation": { "$sum": "$amount" } } }
@@ -51,21 +52,21 @@ db.donations.aggregate([
 // Average donation amount 
 print('\nAverage donation amount');
 db.donations.aggregate([
-	{ $match: {"status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']}, "created_at": lfc16 } },
+	{ $match: {"status" : {$in : donationStatus}, "created_at": lfc16 } },
 	{ $group: { _id: "$currency_code", "avg_donation": { "$avg": "$amount" } } }
 ]);
 
 // Max donation amount 
 print('\nHighest Individual Donation (INR and foreign currency, separate)');
 db.donations.aggregate([
-	{ $match: {"status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']}, "created_at": lfc16 } },
+	{ $match: {"status" : {$in : donationStatus}, "created_at": lfc16 } },
 	{ $group: { _id: "$currency_code", "max_donation": { "$max": "$amount" } } }
 ]);
 
 // NGO with most number of foreign donations (in LFC '16)
 print('\nNGO with most number of foreign donations (in LFC 16)');
 db.donations.aggregate([
-	{ $match: { "status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']}, "created_at": lfc16, "currency_code": {$ne: 'INR'} } },
+	{ $match: { "status" : {$in : donationStatus}, "created_at": lfc16, "currency_code": {$ne: 'INR'} } },
 	{ $group: { _id: { _id:"$nonprofit._id", name: "$nonprofit.name"}, "total_no_donation": { "$sum": 1 } } },
 	{ $sort: { "total_no_donation": -1} },
 	{ $limit: 1 }
@@ -82,10 +83,10 @@ db.campaigns.aggregate([
 // No. of donors converted to fundraisers and as % of overall donors  
 // % of donors woh are fundraisers
 print('\nNo. of Fundraisers');
-var fundraisers = db.campaigns.distinct("creator.id");
+var fundraisers = db.campaigns.distinct("creator.id",{created_at:lfc16});
 print(fundraisers.length);
 print('\nNo. of Donors');
-var donors = db.donations.distinct("user._id");
+var donors = db.donations.distinct("user._id",{created_at:lfc16, "status" : {$in : donationStatus}});
 print(donors.length);
 print('\nNo. of donors converted to fundraisers and as % of overall donors');
 print((fundraisers.length/donors.length)*100);
@@ -108,9 +109,9 @@ var fundedCount = 0;
 var totalCount = 0;
 myCursor.forEach(function(campaign) {
 	totalCount++;
-	// todo - fix this
-	db.statistics.find({type:'campaign', _id:campaign._id}, function(stats){
-		if(campaign.target <= stats.raised_amount) {
+	db.statistics.findOne({type:'campaign', _id: campaign._id.valueOf()},{}, function(stats){
+		print(campaign.target_amount, stats.raised_amount);
+		if(campaign.target_amount <= stats.raised_amount) {
 			fundedCount++;
 		}
 	});
@@ -126,11 +127,11 @@ var march = { $gte: ISODate(start.toISOString()), $lt: ISODate(end.toISOString()
 print('\nDonations in March');
 print('total amounts');
 db.donations.aggregate([
-	{ $match: { "status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']}, "created_at": march } },
+	{ $match: { "status" : {$in : donationStatus}, "created_at": march } },
 	{ $group: { _id: "$currency_code", "total_donation": { "$sum": "$amount" } } }
 ]);
 print('number of donations');
-db.donations.find({"status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']}, "created_at": march}).count();
+db.donations.find({"status" : {$in : donationStatus}, "created_at": march}).count();
 
 start = new Date(2016,3,1);
 end = new Date(2016,3,28,23,59);
@@ -138,17 +139,17 @@ var april = { $gte: ISODate(start.toISOString()), $lt: ISODate(end.toISOString()
 print('\nDonations in April');
 print('total amounts');
 db.donations.aggregate([
-	{ $match: { "status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']}, "created_at": april } },
+	{ $match: { "status" : {$in : donationStatus}, "created_at": april } },
 	{ $group: { _id: "$currency_code", "total_donation": { "$sum": "$amount" } } }
 ]);
 
 print('number of donations');
-db.donations.find({"status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']}, "created_at": april}).count();
+db.donations.find({"status" : {$in : donationStatus}, "created_at": april}).count();
 
 // NGO amount raised from foreign donations
 print('\nNGO amount raised from foreign donations');
 db.donations.aggregate([
-	{ $match: { "status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']}, "currency_code": {$ne: 'INR'}, created_at: lfc16 } },
+	{ $match: { "status" : {$in : donationStatus}, "currency_code": {$ne: 'INR'}, created_at: lfc16 } },
 	{ $group: { _id: { _id:"$nonprofit._id", name: "$nonprofit.name", currency_code :"$currency_code"}, "amount": { "$sum": "$amount" } } },
 	{ $sort: { "amount": -1} },
 	{ $sort: { "_id.name": -1} }
@@ -157,16 +158,16 @@ db.donations.aggregate([
 // NGO amount raised
 print('\nNGO amount raised');
 db.donations.aggregate([
-	{ $match: { "status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']}, created_at: lfc16 } },
+	{ $match: { "status" : {$in : donationStatus}, created_at: lfc16 } },
 	{ $group: { _id: { _id:"$nonprofit._id", name: "$nonprofit.name", currency_code :"$currency_code"}, "amount": { "$sum": "$amount" } } },
 	{ $sort: { "amount": -1} },
 	{ $sort: { "_id.name": -1} }
-]);
+]).map(function(v){return v;});
 
 // NGO with maximum number of donations in a single day
 print('\nNGO with maximum number of donations in a single day');
 db.donations.aggregate([
-	{ $match: { "status" : {$in : ['CONFIRMED', 'DISBURSED', 'SETTLED']}, created_at: lfc16 } },
+	{ $match: { "status" : {$in : donationStatus}, created_at: lfc16 } },
 	{ $project: { 
 		date: {day: {$dayOfMonth: '$created_at'}, month: {$month: '$created_at'}, year: {$year: '$created_at'}}, 
 		ngo: {name: '$nonprofit.name', _id: '$nonprofit._id'}}
