@@ -176,3 +176,7 @@ db.donations.aggregate([
 	{ $sort: { "total_no_donation": -1} },
 	{ $limit: 1 }
 ]);
+
+db.nonprofits.count({media: {$not: {$elemMatch: {label:'Video'}}}})
+
+db.nonprofits.distinct('name',{media: {$not: {$elemMatch: {label:'Video'}}}})
