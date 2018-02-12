@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // Since first two arguments are node executable path and script location.
 let args = process.argv.slice(2);
 
