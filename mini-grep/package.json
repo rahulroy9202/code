@@ -1,0 +1,11 @@
+{
+  "name": "mini-grep",
+  "version": "0.0.1",
+  "description": "`node grep.js <input file path> <word>`",
+  "main": "grep.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "author": "rahulroy9202@gmail.com",
+  "license": "ISC"
+}
